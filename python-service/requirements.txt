@@ -1,0 +1,39 @@
+fastapi==0.115.0
+uvicorn[standard]==0.30.6
+python-multipart==0.0.9
+pydantic==2.9.2
+python-dotenv==1.0.1
+
+# PDF parsing
+# NOTE: pinned to a version with prebuilt wheels for Python 3.13 on Windows.
+# Older pins (e.g. 1.24.x) have no cp313 wheel and pip will try to compile
+# from source, which requires Visual Studio Build Tools. Don't downgrade this
+# unless you also downgrade to Python 3.11/3.12.
+pymupdf==1.24.14
+
+# Tokenization for chunking
+# NOTE: 0.7.0 predates Python 3.13 wheel support (needs a Rust compiler to
+# build from source on 3.13). 0.8.0+ ships prebuilt wheels.
+tiktoken==0.8.0
+
+# Vector DB
+# NOTE ON WINDOWS: chroma-hnswlib (a chromadb dependency, pinned exactly to
+# 0.7.6 by chromadb 0.6.x) is known to fail to build on some Windows/Python
+# combinations even when a wheel should exist — this is a long-standing,
+# still-open upstream packaging issue (chroma-core/chroma#4117). If pip
+# tries to compile it from source, install "Desktop development with C++"
+# from https://visualstudio.microsoft.com/visual-cpp-build-tools/ first —
+# it's a small extension and compiles in seconds once a compiler exists.
+# Do NOT run this project on Python 3.13 — several dependencies here
+# (pymupdf, chromadb/numpy, tiktoken, chroma-hnswlib) lack 3.13 wheels.
+# Use a Python 3.11 or 3.12 virtual environment.
+chromadb==0.6.3
+
+# Gemini SDK (for both embeddings and generation)
+google-generativeai==0.8.2
+
+# Fallback local embeddings (used if GEMINI embeddings are unavailable)
+sentence-transformers==3.0.1
+
+
+posthog<6
